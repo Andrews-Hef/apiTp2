@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Genre;
 use App\Repository\GenreRepository;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,6 +34,26 @@ class ApiGenreController extends AbstractController
          
         $resultat = $serializer->serialize(
             $genres, 
+        'json',
+        [
+            'groups' => ['listGenreSimple']
+        ] );
+        // return $this->render('api_genre/index.html.twig', [
+        //     'controller_name' => 'ApiGenreController',
+        // ]);
+        return new JsonResponse($resultat, 200,[], true);
+    }
+    /**
+     * @Route("/api/genres", name="api_genres_create", methods={"POST"})
+     */
+    public function create(Request $request, SerializerInterface $serializer)
+    {
+         $data= $request->getContent();
+         $genres =new Genre();
+         $serializer->deserialize($data,Genre::class,'')
+        $resultat = $serializer->serialize(
+            $genres, 
+            //2.15 video6
         'json',
         [
             'groups' => ['listGenreSimple']
