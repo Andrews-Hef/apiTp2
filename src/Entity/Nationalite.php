@@ -16,16 +16,19 @@ class Nationalite
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"listAuteurFull"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"listAuteurFull","listAuteurSimple"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=Auteur::class, mappedBy="relation")
+     * 
      */
     private $auteurs;
 
