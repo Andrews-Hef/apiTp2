@@ -7,6 +7,7 @@ use App\Repository\EditeurRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\Livre;
 
 /**
  * @ORM\Entity(repositoryClass=EditeurRepository::class)
@@ -18,13 +19,13 @@ class Editeur
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"listAuteurFull"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listGenreFull"})
-     * @Groups({"listAuteurFull"})
+     * @Groups({"listGenreFull","listAuteurFull"})
      * 
      */
     private $nom;

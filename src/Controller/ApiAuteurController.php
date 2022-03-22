@@ -69,7 +69,7 @@ class ApiAuteurController extends AbstractController
         $manager->flush(); 
        
         return new JsonResponse(
-            "le auteur a bien été crée",
+            "l'auteur a bien été crée",
             Response::HTTP_CREATED,
             ["location"=> $this->generateUrl(
                 'api_auteurs_show',

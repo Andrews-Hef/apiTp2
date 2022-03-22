@@ -17,8 +17,7 @@ class Auteur
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"listAuteurFull"})
-     * @Groups({"listAuteurSimple"})
+     * @Groups({"listAuteurFull","listAuteurSimple"})
      */
     private $id;
 

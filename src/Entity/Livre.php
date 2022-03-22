@@ -15,42 +15,42 @@ class Livre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listGenreFull"})
-     * @Groups({"listAuteurFull"})
+     * @Groups({"listGenreFull","listAuteurFull","listAuteurSimple"})
+     * 
      */
     private $isbn;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listGenreFull"})
-     * @Groups({"listAuteurFull"})
+     * @Groups({"listGenreFull","listAuteurFull","listAuteurSimple"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"listGenreFull"})
-     * @Groups({"listAuteurFull"})
+     * @Groups({"listGenreFull","listAuteurFull","listAuteurSimple"})
+     * 
      */
     private $prix;
 
     /**
      * @ORM\ManyToOne(targetEntity=Genre::class, inversedBy="livres")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"listAuteurFull"})
+     * @Groups({"listAuteurFull","listAuteurSimple"})
+     * 
      */
     private $genre;
 
     /**
      * @ORM\ManyToOne(targetEntity=Editeur::class, inversedBy="livres")
-     * @Groups({"listGenreFull"})
+     * @Groups({"listGenreFull","listAuteurFull","listAuteurSimple"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"listAuteurFull"})
      */
     private $editeur;
 
@@ -71,7 +71,7 @@ class Livre
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"listGenreFull"})
-     * @Groups({"listAuteurFull"})
+     * 
      */
     private $langue;
 

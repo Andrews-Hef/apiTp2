@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\NationaliteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\NationaliteRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=NationaliteRepository::class)
  */
 class Nationalite
 {
+    //8min partie9
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -22,13 +24,13 @@ class Nationalite
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listAuteurFull","listAuteurSimple"})
+     * @Groups({"listAuteurFull"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=Auteur::class, mappedBy="relation")
-     * 
+     * @Groups({"listAuteurFull"})
      */
     private $auteurs;
 
