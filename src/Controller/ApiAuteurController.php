@@ -3,20 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Auteur;
-use App\Repository\AuteurRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Util\Json;
+use App\Entity\Nationalite;
+use App\Repository\AuteurRepository;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NationaliteRepository;
+use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\MakerBundle\Validator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiAuteurController extends AbstractController
 {
@@ -80,12 +82,17 @@ class ApiAuteurController extends AbstractController
     /**
      * @Route("/api/auteurs/{id}", name="api_auteurs_update", methods={"PUT"})
      */
-    public function edit(Auteur $auteurs ,Request $request,EntityManagerInterface $manager, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function edit(Auteur $auteurs, NationaliteRepository $repoNation ,Request $request,EntityManagerInterface $manager, SerializerInterface $serializer, ValidatorInterface $validator)
     {
          
         $data=$request->getContent();
+        $dataTab = $serializer->decode($data,'json');
+        $nationalite = $repoNation->find($dataTab['nationalite']['id']);
+        //solution1
         $serializer->deserialize($data,Auteur::class,'json',['object_to_populate'=>$auteurs]);
-        
+        $auteurs->setRelation($nationalite);
+        //solution 2
+        //$serializer -> denomalize($data+Tab['auteurs],Auteur::class,null,['object_to_populate'=>$auteurs])
         //gestion des erreurs de validation 
         $errors =$validator->validate($auteurs);
         if( count($errors)){
