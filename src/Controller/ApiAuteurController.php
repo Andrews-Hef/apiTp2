@@ -54,12 +54,15 @@ class ApiAuteurController extends AbstractController
     /**
      * @Route("/api/auteurs", name="api_auteurs_create", methods={"POST"})
      */
-    public function create(Request $request, EntityManagerInterface $manager,SerializerInterface $serializer, ValidatorInterface $validator)
-    {
+    public function create(Request $request,NationaliteRepository $repoNation, EntityManagerInterface $manager,SerializerInterface $serializer, ValidatorInterface $validator)
+    { 
          $data= $request->getContent();
-        // $auteurs =new Auteur();
-        //$serializer->deserialize($data,Auteur::class,'json',['object_to_populate'=> $auteurs]);
-        $auteurs= $serializer->deserialize($data,Auteur::class,'json');
+         $dataTab=$serializer->decode($data,'json');
+         $auteurs=new Auteur();
+         $nationalite = $repoNation->find($dataTab['nationalite']['id']);
+         $serializer->deserialize($data, Auteur::class,'json',['object_to_populate'=>$auteurs]);
+         $auteurs->setRelation($nationalite);
+                 
 
         //gestion des erreurs de validation 
         $errors =$validator->validate($auteurs);
