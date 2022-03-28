@@ -59,10 +59,10 @@ class ApiAuteurController extends AbstractController
          $data= $request->getContent();
          $dataTab=$serializer->decode($data,'json');
          $auteurs=new Auteur();
-         $nationalite = $repoNation->find($dataTab['nationalite']['id']);
-         $serializer->deserialize($data, Auteur::class,'json',['object_to_populate'=>$auteurs]);
+         $nationalite = $repoNation->find($dataTab['relation']['id']);
+         $serializer->deserialize($data, Auteur::class,'json',['object_to_populate'=>$auteurs]);   
          $auteurs->setRelation($nationalite);
-                 
+             
 
         //gestion des erreurs de validation 
         $errors =$validator->validate($auteurs);
